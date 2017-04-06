@@ -1,0 +1,7 @@
+# Compiled source # 
+
+*.class
+*.xml
+
+*.iml
+src/[A-Za-z]\W+java
