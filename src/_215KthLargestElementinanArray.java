@@ -120,4 +120,41 @@ public class _215KthLargestElementinanArray {
           swap(nums, lp, st);
           return lp;
       }
+
+    public int findKthLargest2(int[] nums, int k) {
+        Random rd = new Random();
+        int wanted = nums.length - k;
+        int st = 0, end = nums.length - 1;
+        while(st <= end){
+            int parti = rdpartition(nums, st, end, rd);
+            if(parti == wanted)
+                return nums[parti];
+
+            if(parti < wanted)
+                st = parti + 1;
+            else
+                end = parti - 1;
+        }
+        return nums[st];
+    }
+    public int rdpartition(int[] nums, int st, int end, Random rd){
+        int pivindex = st + rd.nextInt(end - st + 1);  // rd.nextInt() range of 0 .. end - st
+        int pivot = nums[pivindex];
+        swap(nums, end, pivindex);
+
+        int l = st - 1, r = end;
+        while(true){
+            while( nums[++l] < pivot)
+                ;
+            while(r > st && nums[--r] > pivot )
+                ;
+            if(l >= r)
+                break;
+            else
+                swap(nums, l, r);
+        }
+        swap(nums, l, end);
+        return l;
+    }
+
 }

@@ -4,4 +4,6 @@
 *.xml
 
 *.iml
-src/[A-Za-z]\W+java
+
+*.gitignore
+src/test.java

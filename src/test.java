@@ -36,7 +36,7 @@ public class test {
         String t = "";
     //    strb.append(t.length() + '#');
     //    strb.append("2");
-        strb.append( 0 + 'a' );
+        strb.append( "" + t.length() + 'a' );
         System.out.println(strb.toString());
     }
 }
