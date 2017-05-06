@@ -46,24 +46,20 @@ public class _523ContinuousSubarraySum {
         if (k == 0) return false;
         // Let's only check positive k. Because if there is a n makes n * k = sum, it is always true -n * -k = sum.
         if (k < 0) k = -k;
-
         Set<Integer> sums = new HashSet<>();
         int sum = 0;
         sums.add(0);
 
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
-
             if (i > 0) {
                 // Validate from the biggest possible n * k to k
                 for (int j = (sum / k) * k; j >= k; j -= k) {
                     if (sums.contains(sum - j)) return true;
                 }
             }
-
             sums.add(sum);
         }
-
         return false;
     }
 

@@ -14,10 +14,15 @@ public class test {
 //            System.out.println(onestr);
 //        }
 
-        StringBuilder strb = new StringBuilder();
-        strb.insert(1,'a');
-        System.out.println(strb);
-
+//        StringBuilder strb = new StringBuilder();
+//        strb.insert(1,'a');
+//        System.out.println(strb);
+          List<String> re = new ArrayList<>();
+          re.add("100");
+          re.add("40");
+          re.add("70");
+        Collections.sort(re);
+        System.out.println(re);
 
 //        int[] arr = {1,2,4,-1,6,-1,-1,5,8,-1,-1,-1,3,6,-1,9,-1,-1,7,-1,10,11,-1,-1,-1};
 //        int[] arr2 = {1, -1, 3, 6, -1, 9, -1, -1, 7, -1, 10, 11, -1, -1, -1};
