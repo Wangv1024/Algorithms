@@ -49,11 +49,33 @@ public class test {
 //        System.out.println(ss.split(":").length);
 
     //    Set<String> se = new HashSet<>();
-        List<String> se = new ArrayList<>();
-        System.out.println(se.size());
-        se.set(0, "ss");
-        for(String str : se)
-            System.out.println(str);
+//        List<String> se = new ArrayList<>();
+//        System.out.println(se.size());
+//        se.set(0, "ss");
+//        for(String str : se)
+//            System.out.println(str);
+//        int n = 99;
+//        int ones = 0;
+//        for (long m = 1; m <= n; m *= 10)
+//            ones += (n/m + 8) / 10 * m + (n/m % 10 == 1 ? n%m + 1 : 0);
+//        System.out.println(99 / 1);
+
+//        Set<int[]> se = new HashSet<>();
+//        se.add(new int[] {1,2});
+//        se.add(new int[] {2,3});
+//        se.add(new int[] {1,2});
+
+//        Queue<Integer> que = new LinkedList<>();
+//        que.add(1);
+//        que.add(2);
+//        que.add(4);
+//        System.out.println(que.peek());
+//        System.out.println(que.poll());
+
+    //    System.out.println(isSubstring( "ertsdfgssdf", "sdfgs"));
+
+        int a = 2147483647;
+        int b = 1;
 
     }
     public static TreeNode buildTree(int[] preorder, int[] glob) {
@@ -79,5 +101,47 @@ public class test {
         printhelper(node.right, false, isright);
         if(isright && !isleft)
             System.out.print(node.val + " ");
+    }
+
+    public static int isSubstring(String s, String pattern){
+        if(s.length() < pattern.length() )
+            return -1;
+        if(s.length() == pattern.length() )
+            return s.equals(pattern) ? 0 : -1;
+
+        int[] tab = getPattern(pattern);
+        for(int i = 0, j = 0; i < s.length(); i++){
+            if(s.charAt(i) == pattern.charAt(j)){
+                if(j == pattern.length() - 1)
+                    return i - pattern.length() + 1;
+                else
+                    j ++;
+            }
+            else{
+                if(j != 0){
+                    j = tab[j - 1];
+                    i --;
+                }
+            }
+        }
+        return -1;
+
+    }
+    private static int[] getPattern(String pattern){
+        int[] res = new int[pattern.length()];
+        int st = 0;
+        for(int i = 1; i < pattern.length(); i++){
+            if(pattern.charAt(st) == pattern.charAt(i)){
+                st ++;
+                res[i] = st;
+            }
+            else {
+                if(st != 0){
+                    st = res[st - 1];
+                    i --;
+                }
+            }
+        }
+        return res;
     }
 }

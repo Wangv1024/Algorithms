@@ -6,6 +6,33 @@ import java.util.LinkedList;
  */
 public class _114FlattenBinaryTreetoLinkedList {
 
+    TreeNode prev = null;
+    public void flatten_bypreorder(TreeNode root){
+        preorder(root);
+    }
+    // Use preorder traverse property:
+    private void preorder(TreeNode root){
+        if(root == null)
+            return;
+        // At current node break all the connection with
+        // its child node. but reserved its children
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        root.left = null;
+        root.right = null;
+
+        // if current node exist previous node, linked it with current node
+        if(prev != null){
+            prev.right = root;
+        }
+        // connection finished, update previous node
+        prev = root;
+
+        // go next node by preoder traverse order
+        preorder(left);
+        preorder(right);
+    }
+
     public void flatten(TreeNode root){
         flattenthis(root);
     }
@@ -52,6 +79,8 @@ public class _114FlattenBinaryTreetoLinkedList {
         return tail;
     }
 
+    // Time complexity of this approach: 2n,  each node goes through one times inner loop
+    //  and one times outer loop,
      public void flatten3(TreeNode root) {
          Deque<TreeNode> st = new LinkedList<>();
          while(root != null){

@@ -39,20 +39,25 @@ public class _124BinaryTreeMaximumPathSum {
     }
 
 
-//    public int helper(TreeNode root, int[] res){
-//        if(root == null)
-//            return 0;
-//
-//        int left = helper(root.left, res);
-//        int right = helper(root.right, res);
-//
-//        int onesidemax = Math.max( Math.max(left, right), 0) + root.val;
-//        int crossmax = Math.max(left + right + root.val, root.val);
-//        res[0] = Math.max( Math.max(res[0], crossmax), onesidemax);
-//
-//        return onesidemax;
-//    }
+    int max;   // better approach
+    public int maxPathSum1(TreeNode root) {
+        if(root == null)
+            return Integer.MIN_VALUE;
+        if(root.left == null && root.right == null)
+            return root.val;
+        getMaxPath(root);
+        return max;
+    }
+    private int getMaxPath(TreeNode root){
+        int leftM = 0, rightM = 0;
+        if(root.left != null)
+            leftM = Math.max( getMaxPath(root.left), 0);
+        if(root.right != null)
+            rightM = Math.max( getMaxPath(root.right), 0);
 
+        max = Math.max(max, leftM + rightM + root.val);
+        return Math.max(leftM, rightM) + root.val;
+    }
 }
 
 

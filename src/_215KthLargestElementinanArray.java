@@ -157,4 +157,49 @@ public class _215KthLargestElementinanArray {
         return l;
     }
 
+//
+//        public int findKthLargest(int[] nums, int k) {
+//            int index = nums.length - k;
+//            return quickSelect(nums, index, 0, nums.length - 1);
+//        }
+//        private int quickSelect(int[] nums, int index, int st, int end){
+//
+//            int partitionIndex = partition(nums, st, end);
+//            if(partitionIndex == index)
+//                return nums[index];
+//
+//            if(index < partitionIndex)
+//                return quickSelect(nums, index, st, partitionIndex - 1);
+//            else
+//                return quickSelect(nums, index, partitionIndex + 1, end);
+//        }
+//        private int partition(int[] nums, int st, int end){
+//            if(st >= end)
+//                return st;
+//            Random rd = new Random();
+//            int pivotindex = rd.nextInt(end - st + 1) + st;
+//            swap(nums, pivotindex, st);
+//
+//            int pivot = nums[st];
+//            int left = st, right = end + 1;
+//            while(true){
+//                while(++left <= end && nums[left] < pivot)
+//                    ;
+//                while(--right > st && nums[right] > pivot)
+//                    ;
+//                if(left >= right)
+//                    break;
+//                swap(nums, left, right);
+//            }
+//            swap(nums, st, right);
+//            return right;
+//        }
+//        private void swap(int[] nums, int st, int end){
+//            if(st == end)
+//                return;
+//            nums[st] = nums[st] ^ nums[end];
+//            nums[end] = nums[st] ^ nums[end];
+//            nums[st] = nums[st] ^ nums[end];
+//        }
+
 }

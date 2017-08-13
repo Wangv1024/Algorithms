@@ -91,6 +91,40 @@ public class _333LargestBSTSubtree {
         return ret;
     }
 
+    int max = 0;
+    public int largestBSTSubtree3(TreeNode root) {
+        getLargestBST(root);
+        return max;
+    }
+    private Integer[] getLargestBST(TreeNode root){
+        if(root == null){
+            Integer[] ret = new Integer[3];
+            ret[2] = 0;
+            return ret;
+        }
 
+        Integer[] left = getLargestBST(root.left);
+        Integer[] right = getLargestBST(root.right);
+        if(left[2] == -1 || right[2] == -1 ) // -1 at index 2 means not a valid BST below, so return immediatly
+            return left[2] == -1? left : right; // So return -1 array to upper level;
+
+        // index 2 indicates the size of array, size == 0 means it is empty tree,
+        // Not an empty tree means we need to exam its range with root
+        if(left[1] != null && left[1] >= root.val || right[0] != null && root.val >= right[0]){
+            left[2] = -1;
+            return left;
+        }
+        max = Math.max(max, 1 + left[2] + right[2]);
+
+        // At this phrase, we ensure the both left[] and right[] is valid (does not contains -1 at index 2).
+        // But left and right can be empty, and if sub tree is not empty, then it must have value greater or
+        // less than root.val,  so we prepare result as:
+        Integer[] ret = new Integer[3];
+        ret[0] = left[0] == null? root.val : left[0];
+        ret[1] = right[1] == null? root.val : right[1];
+        ret[2] = 1 + left[2] + right[2]; // Bugs:  this one forget, nullpointer exception
+
+        return ret;
+    }
 }
 

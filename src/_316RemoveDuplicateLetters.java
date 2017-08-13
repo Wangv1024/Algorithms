@@ -32,4 +32,29 @@ public class _316RemoveDuplicateLetters {
             strb.append(st.pop());
         return strb.reverse().toString();
     }
+
+    //    beats 79.89%
+    public String removeDuplicateLetters2(String s) {
+        if(s.length() <= 1)
+            return s;
+
+        int[] letterTab = new int[26];
+        for(int i = 0; i < s.length(); ++ i){
+            letterTab[s.charAt(i) - 'a'] = i;
+        }
+        boolean[] set = new boolean[26];
+        StringBuilder strb = new StringBuilder();
+        for(int i = 0; i < s.length(); ++ i){
+            char curch = s.charAt(i);
+            if(set[curch - 'a'] == true) // set[ curch ] = true; index exceed
+                continue;
+            while( strb.length() > 0 && strb.charAt(strb.length() - 1) > curch && letterTab[ strb.charAt(strb.length() - 1) - 'a'] > i ){
+                set[strb.charAt(strb.length() - 1) - 'a'] = false; // set[ curch ] = true; index exceed
+                strb.deleteCharAt(strb.length() - 1);
+            }
+            strb.append(curch);
+            set[curch - 'a'] = true;  // set[ curch ] = true; index exceed
+        }
+        return strb.toString();
+    }
 }

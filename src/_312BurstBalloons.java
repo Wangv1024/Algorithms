@@ -70,6 +70,34 @@ public class _312BurstBalloons {
         return strb.toString().trim();
     }
 
+    /////////    Method 2
+
+    public int maxCoins3(int[] nums) {
+        if(nums.length <= 1)
+            return nums.length == 0 ? 0 : nums[0];
+
+        int[] newnums = new int[ nums.length + 2 ];
+        int[][] tab = new int[ newnums.length ][ newnums.length ];
+        for(int i = 0; i < nums.length; ++ i){
+            newnums[i + 1] = nums[i];
+        }
+        newnums[0] = 1; newnums[ newnums.length - 1 ] = 1;
+
+        for(int len = 1; len <= nums.length; ++ len){
+            for(int st = 1; st + len - 1 < newnums.length - 1; ++ st){
+                int end = st + len - 1;
+
+                for(int i = st; i <= end; ++ i){
+                    tab[st][end] = Math.max( tab[st][end],
+                            tab[st][i - 1] + tab[i + 1][end] + newnums[i] * newnums[st - 1] * newnums[end + 1] );
+                }
+            }
+        }
+        return tab[1][ newnums.length - 2 ];
+    }
+
+
+
     public static void main(String[] args){
         _312BurstBalloons obj = new _312BurstBalloons();
         int[] nums = {8,2,6,8,9,8,1,4,1,5,3,0,7,7,0,4,2,2,5};

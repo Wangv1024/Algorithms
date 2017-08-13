@@ -69,4 +69,81 @@ public class _272ClosestBinarySearchTreeValueII {
 
         return root;
     }
+
+
+    //////////    O ( k )  solution
+    public List<Integer> closestKValues2(TreeNode root, double target, int k) {
+//        closestKValues1(root, target, k);
+
+        Deque<TreeNode> lessThan = new LinkedList<>();
+        Deque<TreeNode> greater = new LinkedList<>();
+        TreeNode curnode = root;
+        while(curnode != null){
+            if(curnode.val <= target){
+                lessThan.push(curnode);
+                curnode = curnode.right;
+            }
+            else{
+                greater.push(curnode);
+                curnode = curnode.left;
+            }
+        }
+
+        List<Integer> less = new LinkedList<>();
+        List<Integer> more = new LinkedList<>();
+
+        while( !lessThan.isEmpty() )
+            inorder(less, lessThan.pop(), true, k);
+
+        while( !greater.isEmpty() )
+            inorder(more, greater.pop(), false, k);
+
+        List<Integer> res = new LinkedList<>();
+        while(res.size() < k){
+
+            if(less.size() == 0 )
+                res.add( more.remove(0) );
+            else if(more.size() == 0)
+                res.add( less.remove(0) );
+            else{
+                if( Math.abs( less.get(0) - target ) > Math.abs(more.get(0) - target ) )
+                    res.add(more.remove(0));
+                else
+                    res.add(less.remove(0));
+            }
+        }
+        return res;
+    }
+    private void inorder(List<Integer> ls, TreeNode root, boolean reverse, int k){
+        if(ls.size() >= k)
+            return;
+        TreeNode backRoot = root;
+        TreeNode backConnect = reverse? root.right : root.left;
+
+        if(reverse)
+            root.right = null; // This direction get wrong // root.left = null;
+        else
+            root.left = null;
+
+        Deque<TreeNode> st = new LinkedList<>();
+        while(root != null || !st.isEmpty()){
+            while(root != null){
+                st.push(root);
+                root = reverse ? root.right : root.left;
+            }
+
+            TreeNode visit = st.pop();
+            ls.add(visit.val);
+            root = reverse? visit.left : visit.right;
+
+            if(ls.size() >= k)
+                break;
+        }
+
+        if(reverse)
+            backRoot.right = backConnect;
+        else
+            backRoot.left = backConnect;
+    }
+
 }

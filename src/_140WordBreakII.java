@@ -35,4 +35,47 @@ public class _140WordBreakII {
         hm.put(s, newres);
         return newres;
     }
+
+    public List<String> wordBreak2(String s, List<String> wordDict) {
+        Set<String> dict = new HashSet<>(wordDict);
+        List<Integer>[] backtrack = (ArrayList<Integer>[]) new ArrayList[s.length() + 1];
+
+        boolean[] explored = new boolean[s.length() + 1];
+        Queue<Integer> que = new LinkedList<>();
+        que.offer(0);
+
+        while( !que.isEmpty()){
+            int stindex = que.poll();
+            if(explored[stindex] == true)
+                continue;
+
+            for(int i = stindex + 1; i <= s.length(); i++){
+                if(dict.contains(s.substring(stindex, i))){
+                    if(backtrack[i] == null)
+                        backtrack[i] = new ArrayList<>();
+                    backtrack[i].add(stindex);
+
+                    que.offer(i);
+                }
+            }
+
+            explored[stindex] = true;
+        }
+
+        List<String> res = new LinkedList<>();
+        recovery(backtrack, s.length(), res, "", s);
+        return res;
+    }
+    private void recovery(List<Integer>[] back, int curindex, List<String> res, String tmp, String s){
+        if(back[curindex] == null || curindex == 0){
+            if(tmp.length() > 0)
+                res.add(tmp);
+            return;
+        }
+
+        for(int preindex : back[curindex]){
+            String str = s.substring(preindex, curindex);
+            recovery(back, preindex, res, str + ( tmp.length() > 0 ? " " : "" ) + tmp, s);
+        }
+    }
 }

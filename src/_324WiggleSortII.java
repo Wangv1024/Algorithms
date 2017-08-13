@@ -92,5 +92,82 @@ public class _324WiggleSortII {
         wiggleSort(arr);
         System.out.println(Arrays.toString(arr));
     }
+
+
+    ///////////////////////////////////////////
+    // Plan B
+
+    //////////////////////////////////////////
+
+    public void wiggleSortII(int[] nums) {
+        if(nums.length <= 1)
+            return;
+        int medIndex = nums.length / 2;
+        int median = quickSelect(nums, medIndex, 0, nums.length - 1);
+
+        int left = 0, right = nums.length - 1;
+        int len = nums.length;
+        for(int i = 0; i < nums.length; i++){
+            if( i >= left && nums[ trans(i, len) ] > median ){
+                swap(trans(i, len), trans(left, len), nums );
+                left ++;
+            }
+            else if( i <= right && nums[trans(i, len)] < median){
+                swap(trans(i, len), trans(right, len), nums);
+                right--;
+                i --; // left i stay on current position
+            }         // so we can exam new element exchanged to current index.
+
+    /*		if( trans(i, len) >= trans(left, len) && nums[ trans(i, len) ] > median ){
+    			swap(trans(i, len), trans(left, len), nums );
+    			left ++;
+    		}
+    		else if(trans(i, len) <= trans(right, len) && nums[trans(i, len)] < median){
+    			swap(trans(i, len), trans(right, len), nums);
+    			right--; i --;
+    		} */
+        }
+    }
+
+    private int trans(int index, int len){
+        return (index * 2 + 1) % (len | 1); // (index * 2 + 1) % (index | 1);
+    }
+    public int quickSelect(int[] nums, int index, int st, int end){
+        if(st >= end)
+            return nums[st];
+        int parindex = rdpartition(nums, st, end); // partindex is the
+        if(parindex == index)         // pivot index of random partition.
+            return nums[index];
+        if(index < parindex)
+            return quickSelect(nums, index, st, parindex - 1);
+        else
+            return quickSelect(nums, index, parindex + 1, end);
+    }
+    private int rdpartition(int[] nums, int st, int end){
+        if(st >= end)
+            return st;
+        Random rd = new Random();
+        int piv = rd.nextInt(end - st + 1) + st;
+        swap(st, piv, nums);
+        int pivot = nums[st];
+
+        int left = st, right = end + 1;
+        while(true){
+            while(++left <= end && nums[left] < pivot);
+            while(--right > st && nums[right] > pivot);
+            if(left >= right)
+                break;
+            swap(left, right, nums);
+        }
+        swap(st, right, nums);
+        return right;
+    }
+    private void swap(int i1, int i2, int[] nums){
+        if(i1 == i2)
+            return;
+        nums[i1] = nums[i1] ^ nums[i2];
+        nums[i2] = nums[i1] ^ nums[i2];
+        nums[i1] = nums[i1] ^ nums[i2];
+    }
 }
 

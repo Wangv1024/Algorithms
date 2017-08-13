@@ -35,4 +35,37 @@ public class _47PermutationsII {
         }
     }
 
+//    public List<List<Integer>> permuteUnique(int[] nums) {
+//        List<List<Integer>> res = new LinkedList<>();
+//        Arrays.sort(nums);
+//        getPermute(res, nums, 0);
+//        return res;
+//    }
+//    private void getPermute(List<List<Integer>> res, int[] nums, int st){
+//        if(st >= nums.length){
+//            List<Integer> ls = new LinkedList<>();
+//            for(int num : nums)
+//                ls.add(num);
+//            res.add(ls);
+//            return;
+//        }
+//        int[] newarr = new int[nums.length];
+//        System.arraycopy(nums, 0, newarr, 0, nums.length);
+//
+//        for(int i = st; i < newarr.length; i++){
+//            if( st != i && newarr[st] == newarr[i] )
+//                continue;
+//            swap(newarr, st, i);
+//            getPermute(res, newarr, st + 1);
+//            //		swpa(nums, st, i);
+//        }
+//
+//    }
+//    private void swap(int[] nums, int st, int end){
+//        if(st == end)
+//            return;
+//        nums[st] = nums[st] ^ nums[end];
+//        nums[end] = nums[st] ^ nums[end];
+//        nums[st] = nums[st] ^ nums[end];
+//    }
 }

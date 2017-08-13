@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -28,4 +29,26 @@ public class _320GeneralizedAbbreviation {
 //
 //        }
 //    }
+
+    public List<String> generateAbbreviations(String word) {
+        List<String> res = new LinkedList<>();
+        generateHelper(res, word.toCharArray(), new StringBuilder(), 0, 0);
+        return res;
+    }
+    private void generateHelper(List<String> res, char[] charr, StringBuilder strb, int st, int abbrav){
+        int len = strb.length();
+        if(st == charr.length){
+            if(abbrav != 0)
+                strb.append(abbrav);
+            // strb.append( strb );  ??  bugs !!
+            res.add(strb.toString());
+        }
+        else{
+            generateHelper(res, charr, strb, st + 1, abbrav + 1 );
+            if( abbrav != 0 )
+                strb.append( abbrav );
+            generateHelper(res, charr, strb.append( charr[st] ), st + 1, 0);
+        }
+        strb.setLength( len );
+    }
 }
